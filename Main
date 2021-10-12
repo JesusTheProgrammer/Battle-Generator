@@ -1,0 +1,58 @@
+public class BattleGrounds
+{
+    public static int random(int max, int min){
+        int range = max - min + 1;
+        return (int)(range * Math.random()) + min;
+    }
+    
+    public static boolean getAttack(boolean attack){
+        if(random(2, 1) == 1){
+            attack = true;
+        }
+        return attack;
+    }
+    
+    public static int getDeaths(int milNum){
+        return milNum - random(milNum, 0);
+    }
+    
+    public static void main(String[] args) {
+    
+        int frenMil = random(10000, 100);
+        int enMil = random(10000, 100);
+        int frenNum = frenMil;
+        int enNum = enMil;
+        int turn = 1;
+        boolean frenAttack = false;
+        boolean enAttack = false;
+        
+        System.out.println("Starting Stats\nFriendly Units:" + frenMil + "\nEnemy Units:" + enMil);
+        
+        while(frenMil != 0 && frenMil != 0 && enMil != 0){
+           frenAttack = getAttack(frenAttack);
+           enAttack = getAttack(enAttack);
+            if(frenAttack == true){
+                enMil = getDeaths(enMil);
+                
+                System.out.println("\n" + turn + ".Friendly attack;\nEnemy Deaths: " + (enNum - enMil) + "\nEnemy units left:" + enMil);
+                
+                enNum = enMil;
+                frenAttack = false;
+            }
+            if(enAttack == true && enMil != 0 && frenMil != 0){
+               frenMil = getDeaths(frenMil);
+               System.out.println("\n" + turn + ".Enemy attack;\nFriendly Deaths: " + (frenNum - frenMil) + "\nFriendly Units left:" + frenMil);
+               enAttack = false;
+               frenNum = frenMil;
+            }
+            turn++;
+        }
+        if(enMil == 0){
+            System.out.println("\nFriendlies win");
+        }
+        else if(frenMil == 0){
+            System.out.println("\nEnemies win");
+        }
+        System.out.println("\nThe end");
+    }
+}
